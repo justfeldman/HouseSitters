@@ -67,13 +67,13 @@
       <form id="simulationForm">
         <label for="propertyPrice">Property Price ($):</label>
         <select id="propertyPrice">
-          <option value="500000">500,000</option>
-          <option value="750000">750,000</option>
-          <option value="1000000">1,000,000</option>
+          <option value="500000" data-units="5">500,000 (5 Units)</option>
+          <option value="750000" data-units="10">750,000 (10 Units)</option>
+          <option value="1000000" data-units="15">1,000,000 (15 Units)</option>
         </select>
 
         <label for="numUnits">Number of Rental Units:</label>
-        <select id="numUnits">
+        <select id="numUnits" disabled>
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="15">15</option>
@@ -113,6 +113,14 @@
   </div>
 
   <script>
+    // Dynamically update the number of units based on the property price
+    document.getElementById('propertyPrice').addEventListener('change', function () {
+      const selectedOption = this.options[this.selectedIndex];
+      const numUnits = selectedOption.getAttribute('data-units');
+      const numUnitsSelect = document.getElementById('numUnits');
+      numUnitsSelect.value = numUnits;
+    });
+
     document.getElementById('calculate').addEventListener('click', function () {
       // Get inputs
       const propertyPrice = parseFloat(document.getElementById('propertyPrice').value);
