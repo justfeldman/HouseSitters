@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Buying Simulation</title>
+  <style>
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    label, select, button {
+      display: block;
+      margin: 10px auto;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Home Buying Simulation</h1>
+    <p>Select a property and a management company to see the estimated IRR:</p>
+    <form id="simulationForm">
+      <label for="property">Choose a Property:</label>
+      <select id="property">
+        <option value="property1">Property 1 ($500,000)</option>
+        <option value="property2">Property 2 ($700,000)</option>
+        <option value="property3">Property 3 ($1,000,000)</option>
+      </select>
+
+      <label for="management">Choose a Management Company:</label>
+      <select id="management">
+        <option value="companyA">Company A (5% Management Fee)</option>
+        <option value="companyB">Company B (7% Management Fee)</option>
+        <option value="companyC">Company C (10% Management Fee)</option>
+      </select>
+
+      <button type="button" id="calculate">Calculate IRR</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById('calculate').addEventListener('click', function () {
+      const property = document.getElementById('property').value;
+      const management = document.getElementById('management').value;
+
+      // Define property prices and management fees
+      const propertyPrices = {
+        property1: 500000,
+        property2: 700000,
+        property3: 1000000
+      };
+
+      const managementFees = {
+        companyA: 0.05,
+        companyB: 0.07,
+        companyC: 0.10
+      };
+
+      // Calculate IRR based on selection
+      const price = propertyPrices[property];
+      const fee = managementFees[management];
+      const irr = ((price * (1 - fee)) / price) * 100;
+
+      // Display the result
+      document.getElementById('result').textContent = `Estimated IRR: ${irr.toFixed(2)}%`;
+    });
+  </script>
+</body>
+</html>
