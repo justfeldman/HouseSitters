@@ -55,6 +55,19 @@
     .details {
       font-size: 14px;
       color: #555;
+      text-align: left;
+    }
+
+    .section {
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: 16px;
+      border-top: 1px solid #ccc;
+      padding-top: 5px;
+    }
+
+    .line-item {
+      margin-left: 10px;
     }
   </style>
 </head>
@@ -157,7 +170,8 @@
       const totalAdditionalCosts = propertyTax + maintenanceCost + capEx + additionalCosts.insurance;
 
       // Adjust for management fees
-      const netIncome = effectiveRent * (1 - managementFee) - totalAdditionalCosts;
+      const managementFeeDeduction = effectiveRent * managementFee;
+      const netIncome = effectiveRent - managementFeeDeduction - totalAdditionalCosts;
 
       // Calculate IRR
       const irr = (netIncome / propertyPrice) * 100;
@@ -165,19 +179,21 @@
       // Display results
       document.getElementById('result').textContent = `Estimated IRR: ${irr.toFixed(2)}%`;
       document.getElementById('details').innerHTML = `
-        Property Price: $${propertyPrice.toLocaleString()} <br>
-        Number of Units: ${numUnits} <br>
-        Annual Rent per Unit: $${annualRentPerUnit.toLocaleString()} <br>
-        Total Annual Rent (Before Vacancy): $${totalAnnualRent.toLocaleString()} <br>
-        Vacancy Loss: $${vacancyLoss.toLocaleString()} <br>
-        Effective Rent (After Vacancy): $${effectiveRent.toLocaleString()} <br>
-        Management Fee Deduction: $${(effectiveRent * managementFee).toLocaleString()} <br>
-        Annual Property Tax: $${propertyTax.toLocaleString()} <br>
-        Annual Maintenance Cost: $${maintenanceCost.toLocaleString()} <br>
-        Annual Capital Expenditures: $${capEx.toLocaleString()} <br>
-        Annual Insurance Cost: $${additionalCosts.insurance.toLocaleString()} <br>
-        Total Additional Costs: $${totalAdditionalCosts.toLocaleString()} <br>
-        Net Income (After Costs): $${netIncome.toLocaleString()}
+        <div class="section">Revenue</div>
+        <div class="line-item">Total Annual Rent (Before Vacancy): $${totalAnnualRent.toLocaleString()}</div>
+        <div class="line-item">Vacancy Loss: -$${vacancyLoss.toLocaleString()}</div>
+        <div class="line-item">Effective Rent (After Vacancy): $${effectiveRent.toLocaleString()}</div>
+
+        <div class="section">Expenses</div>
+        <div class="line-item">Management Fee Deduction: $${managementFeeDeduction.toLocaleString()}</div>
+        <div class="line-item">Annual Property Tax: $${propertyTax.toLocaleString()}</div>
+        <div class="line-item">Annual Maintenance Cost: $${maintenanceCost.toLocaleString()}</div>
+        <div class="line-item">Annual Capital Expenditures: $${capEx.toLocaleString()}</div>
+        <div class="line-item">Annual Insurance Cost: $${additionalCosts.insurance.toLocaleString()}</div>
+        <div class="line-item">Total Additional Costs: $${totalAdditionalCosts.toLocaleString()}</div>
+
+        <div class="section">Profit</div>
+        <div class="line-item">Net Income (After Costs): $${netIncome.toLocaleString()}</div>
       `;
     });
   </script>
