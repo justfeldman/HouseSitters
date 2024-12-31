@@ -21,7 +21,7 @@
       text-align: center;
     }
 
-    label, select, input, button {
+    label, select, button {
       display: block;
       margin: 10px auto;
     }
@@ -66,16 +66,32 @@
       <h2>Inputs</h2>
       <form id="simulationForm">
         <label for="propertyPrice">Property Price ($):</label>
-        <input type="number" id="propertyPrice" placeholder="Enter property price" required>
+        <select id="propertyPrice">
+          <option value="500000">500,000</option>
+          <option value="750000">750,000</option>
+          <option value="1000000">1,000,000</option>
+        </select>
 
         <label for="numUnits">Number of Rental Units:</label>
-        <input type="number" id="numUnits" placeholder="Enter the number of units" required>
+        <select id="numUnits">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+        </select>
 
         <label for="annualRent">Annual Rent per Unit ($):</label>
-        <input type="number" id="annualRent" placeholder="Enter rent per unit" required>
+        <select id="annualRent">
+          <option value="12000">12,000</option>
+          <option value="15000">15,000</option>
+          <option value="18000">18,000</option>
+        </select>
 
         <label for="vacancyRate">Vacancy Rate (%):</label>
-        <input type="number" id="vacancyRate" placeholder="Enter vacancy rate (e.g., 5)" required>
+        <select id="vacancyRate">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+        </select>
 
         <label for="management">Choose a Management Company:</label>
         <select id="management">
@@ -92,7 +108,7 @@
     <div class="outputs">
       <h2>Outputs</h2>
       <div id="result">Estimated IRR: N/A</div>
-      <div class="details" id="details">Enter inputs to calculate the IRR.</div>
+      <div class="details" id="details">Select options to calculate the IRR.</div>
     </div>
   </div>
 
@@ -104,11 +120,6 @@
       const annualRentPerUnit = parseFloat(document.getElementById('annualRent').value);
       const vacancyRate = parseFloat(document.getElementById('vacancyRate').value) / 100;
       const management = document.getElementById('management').value;
-
-      if (isNaN(propertyPrice) || isNaN(numUnits) || isNaN(annualRentPerUnit) || isNaN(vacancyRate)) {
-        alert('Please enter valid inputs for all fields.');
-        return;
-      }
 
       // Define management fees
       const managementFees = {
