@@ -14,7 +14,7 @@
 
     label, select, button {
       display: block;
-      margin: 10px auto;
+      margin: 15px auto;
     }
 
     button {
@@ -35,6 +35,12 @@
       margin-top: 20px;
       font-size: 18px;
       font-weight: bold;
+    }
+
+    .details {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -61,6 +67,7 @@
     </form>
 
     <div id="result"></div>
+    <div class="details" id="details"></div>
   </div>
 
   <script>
@@ -81,13 +88,48 @@
         companyC: 0.10
       };
 
-      // Calculate IRR based on selection
+      const additionalCosts = {
+        propertyTaxes: 0.012, // 1.2% of property value annually
+        insurance: 1500,     // Fixed annual insurance cost
+        maintenance: 0.01,    // 1% of property value annually
+        vacancyRate: 0.05,   // 5% vacancy rate for rental income
+        transactionFees: 0.03, // 3% closing costs on property value
+        capitalExpenditures: 0.02 // 2% annual CapEx on property value
+      };
+
+      // Fetch property price and management fee
       const price = propertyPrices[property];
       const fee = managementFees[management];
-      const irr = ((price * (1 - fee)) / price) * 100;
 
-      // Display the result
+      // Calculate annual additional costs
+      const propertyTax = price * additionalCosts.propertyTaxes;
+      const maintenanceCost = price * additionalCosts.maintenance;
+      const capEx = price * additionalCosts.capitalExpenditures;
+      const transactionCost = price * additionalCosts.transactionFees;
+      const totalAdditionalCosts = propertyTax + maintenanceCost + additionalCosts.insurance + capEx + transactionCost;
+
+      // Calculate potential rental income
+      const annualRentalIncome = (price * 0.08) * (1 - additionalCosts.vacancyRate); // Assume 8% gross rental yield
+
+      // Adjusted income after management fee
+      const netIncome = annualRentalIncome * (1 - fee);
+
+      // Calculate IRR
+      const irr = ((netIncome - totalAdditionalCosts) / price) * 100;
+
+      // Display results
       document.getElementById('result').textContent = `Estimated IRR: ${irr.toFixed(2)}%`;
+      document.getElementById('details').innerHTML = `
+        Property Price: $${price.toLocaleString()} <br>
+        Annual Property Tax: $${propertyTax.toLocaleString()} <br>
+        Annual Maintenance Cost: $${maintenanceCost.toLocaleString()} <br>
+        Annual Insurance Cost: $${additionalCosts.insurance.toLocaleString()} <br>
+        Annual Capital Expenditures: $${capEx.toLocaleString()} <br>
+        Closing Costs (Transaction Fees): $${transactionCost.toLocaleString()} <br>
+        Total Additional Costs: $${totalAdditionalCosts.toLocaleString()} <br>
+        Annual Rental Income (After Vacancy): $${annualRentalIncome.toLocaleString()} <br>
+        Net Income (After Management Fee): $${netIncome.toLocaleString()}
+      `;
     });
   </script>
 </body>
