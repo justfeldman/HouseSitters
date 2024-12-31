@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Buying Simulation</title>
+  <title>Rental Property IRR Simulation</title>
   <style>
     .container {
       width: 80%;
@@ -46,14 +46,14 @@
 </head>
 <body>
   <div class="container">
-    <h1>Home Buying Simulation</h1>
+    <h1>Rental Property IRR Simulation</h1>
     <p>Select a property and a management company to see the estimated IRR:</p>
     <form id="simulationForm">
       <label for="property">Choose a Property:</label>
       <select id="property">
-        <option value="property1">Property 1 ($500,000)</option>
-        <option value="property2">Property 2 ($700,000)</option>
-        <option value="property3">Property 3 ($1,000,000)</option>
+        <option value="property1">Property 1 ($500,000, Annual Rent: $45,000)</option>
+        <option value="property2">Property 2 ($700,000, Annual Rent: $60,000)</option>
+        <option value="property3">Property 3 ($1,000,000, Annual Rent: $85,000)</option>
       </select>
 
       <label for="management">Choose a Management Company:</label>
@@ -75,11 +75,11 @@
       const property = document.getElementById('property').value;
       const management = document.getElementById('management').value;
 
-      // Define property prices and management fees
-      const propertyPrices = {
-        property1: 500000,
-        property2: 700000,
-        property3: 1000000
+      // Define property prices, annual rent, and management fees
+      const propertyData = {
+        property1: { price: 500000, rent: 45000 },
+        property2: { price: 700000, rent: 60000 },
+        property3: { price: 1000000, rent: 85000 }
       };
 
       const managementFees = {
@@ -91,44 +91,44 @@
       const additionalCosts = {
         propertyTaxes: 0.012, // 1.2% of property value annually
         insurance: 1500,     // Fixed annual insurance cost
-        maintenance: 0.01,    // 1% of property value annually
+        maintenance: 0.01,   // 1% of property value annually
         vacancyRate: 0.05,   // 5% vacancy rate for rental income
-        transactionFees: 0.03, // 3% closing costs on property value
         capitalExpenditures: 0.02 // 2% annual CapEx on property value
       };
 
-      // Fetch property price and management fee
-      const price = propertyPrices[property];
+      // Fetch property data and management fee
+      const price = propertyData[property].price;
+      const annualRent = propertyData[property].rent;
       const fee = managementFees[management];
 
       // Calculate annual additional costs
       const propertyTax = price * additionalCosts.propertyTaxes;
       const maintenanceCost = price * additionalCosts.maintenance;
       const capEx = price * additionalCosts.capitalExpenditures;
-      const transactionCost = price * additionalCosts.transactionFees;
-      const totalAdditionalCosts = propertyTax + maintenanceCost + additionalCosts.insurance + capEx + transactionCost;
+      const vacancyLoss = annualRent * additionalCosts.vacancyRate;
+      const totalAdditionalCosts = propertyTax + maintenanceCost + capEx + additionalCosts.insurance;
 
-      // Calculate potential rental income
-      const annualRentalIncome = (price * 0.08) * (1 - additionalCosts.vacancyRate); // Assume 8% gross rental yield
-
-      // Adjusted income after management fee
-      const netIncome = annualRentalIncome * (1 - fee);
+      // Calculate net income
+      const effectiveRent = annualRent - vacancyLoss; // Adjust rent for vacancy
+      const netIncome = effectiveRent * (1 - fee) - totalAdditionalCosts;
 
       // Calculate IRR
-      const irr = ((netIncome - totalAdditionalCosts) / price) * 100;
+      const irr = (netIncome / price) * 100;
 
       // Display results
       document.getElementById('result').textContent = `Estimated IRR: ${irr.toFixed(2)}%`;
       document.getElementById('details').innerHTML = `
         Property Price: $${price.toLocaleString()} <br>
+        Annual Rent (Before Vacancy): $${annualRent.toLocaleString()} <br>
+        Vacancy Loss: $${vacancyLoss.toLocaleString()} <br>
+        Effective Rent (After Vacancy): $${effectiveRent.toLocaleString()} <br>
+        Management Fee Deduction: $${(effectiveRent * fee).toLocaleString()} <br>
         Annual Property Tax: $${propertyTax.toLocaleString()} <br>
         Annual Maintenance Cost: $${maintenanceCost.toLocaleString()} <br>
-        Annual Insurance Cost: $${additionalCosts.insurance.toLocaleString()} <br>
         Annual Capital Expenditures: $${capEx.toLocaleString()} <br>
-        Closing Costs (Transaction Fees): $${transactionCost.toLocaleString()} <br>
+        Annual Insurance Cost: $${additionalCosts.insurance.toLocaleString()} <br>
         Total Additional Costs: $${totalAdditionalCosts.toLocaleString()} <br>
-        Annual Rental Income (After Vacancy): $${annualRentalIncome.toLocaleString()} <br>
-        Net Income (After Management Fee): $${netIncome.toLocaleString()}
+        Net Income (After Costs): $${netIncome.toLocaleString()}
       `;
     });
   </script>
