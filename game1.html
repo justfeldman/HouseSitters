@@ -6,15 +6,24 @@
   <title>Rental Property IRR Simulation</title>
   <style>
     .container {
-      width: 80%;
+      width: 90%;
       margin: 0 auto;
       font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .inputs, .outputs {
+      width: 45%;
+    }
+
+    h1 {
       text-align: center;
     }
 
     label, select, input, button {
       display: block;
-      margin: 15px auto;
+      margin: 10px auto;
     }
 
     button {
@@ -31,48 +40,60 @@
       background-color: #0056b3;
     }
 
+    .outputs {
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
     #result {
-      margin-top: 20px;
       font-size: 18px;
       font-weight: bold;
+      margin-bottom: 20px;
     }
 
     .details {
       font-size: 14px;
       color: #555;
-      margin-top: 10px;
     }
   </style>
 </head>
 <body>
+  <h1>Rental Property IRR Simulation</h1>
   <div class="container">
-    <h1>Rental Property IRR Simulation</h1>
-    <p>Input details about the property, management company, and assumptions to calculate the IRR:</p>
-    <form id="simulationForm">
-      <label for="propertyPrice">Property Price ($):</label>
-      <input type="number" id="propertyPrice" placeholder="Enter property price" required>
+    <!-- Inputs Section -->
+    <div class="inputs">
+      <h2>Inputs</h2>
+      <form id="simulationForm">
+        <label for="propertyPrice">Property Price ($):</label>
+        <input type="number" id="propertyPrice" placeholder="Enter property price" required>
 
-      <label for="numUnits">Number of Rental Units:</label>
-      <input type="number" id="numUnits" placeholder="Enter the number of units" required>
+        <label for="numUnits">Number of Rental Units:</label>
+        <input type="number" id="numUnits" placeholder="Enter the number of units" required>
 
-      <label for="annualRent">Annual Rent per Unit ($):</label>
-      <input type="number" id="annualRent" placeholder="Enter rent per unit" required>
+        <label for="annualRent">Annual Rent per Unit ($):</label>
+        <input type="number" id="annualRent" placeholder="Enter rent per unit" required>
 
-      <label for="vacancyRate">Vacancy Rate (%):</label>
-      <input type="number" id="vacancyRate" placeholder="Enter vacancy rate (e.g., 5)" required>
+        <label for="vacancyRate">Vacancy Rate (%):</label>
+        <input type="number" id="vacancyRate" placeholder="Enter vacancy rate (e.g., 5)" required>
 
-      <label for="management">Choose a Management Company:</label>
-      <select id="management">
-        <option value="companyA">Company A (5% Management Fee)</option>
-        <option value="companyB">Company B (7% Management Fee)</option>
-        <option value="companyC">Company C (10% Management Fee)</option>
-      </select>
+        <label for="management">Choose a Management Company:</label>
+        <select id="management">
+          <option value="companyA">Company A (5% Management Fee)</option>
+          <option value="companyB">Company B (7% Management Fee)</option>
+          <option value="companyC">Company C (10% Management Fee)</option>
+        </select>
 
-      <button type="button" id="calculate">Calculate IRR</button>
-    </form>
+        <button type="button" id="calculate">Calculate IRR</button>
+      </form>
+    </div>
 
-    <div id="result"></div>
-    <div class="details" id="details"></div>
+    <!-- Outputs Section -->
+    <div class="outputs">
+      <h2>Outputs</h2>
+      <div id="result">Estimated IRR: N/A</div>
+      <div class="details" id="details">Enter inputs to calculate the IRR.</div>
+    </div>
   </div>
 
   <script>
