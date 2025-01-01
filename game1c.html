@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game1C - Real Estate Listings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        header nav a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 16px;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        .search-section {
+            margin-bottom: 30px;
+        }
+        .search-section input, .search-section button {
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+        }
+        .property-listings {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .property-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            text-align: left;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .property-card img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .property-card h3 {
+            font-size: 20px;
+            color: #333;
+            margin: 0 0 10px;
+        }
+        .property-card p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-top: 1px solid #ddd;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Real Estate Game</h1>
+        <nav>
+            <a href="game1a.html">Home</a>
+            <a href="game1b.html">Calc IRR</a>
+            <a href="game1c.html">Listings</a>
+        </nav>
+    </header>
+    <main>
+        <section class="search-section">
+            <h2>Find Your Next Investment</h2>
+            <form>
+                <input type="text" placeholder="Enter city or zip code" required>
+                <input type="number" placeholder="Number of nights" required>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+
+        <section class="property-listings">
+            <!-- Example Property Cards -->
+            <div class="property-card">
+                <img src="https://via.placeholder.com/300" alt="Property 1">
+                <h3>Modern Apartment</h3>
+                <p>San Francisco, CA</p>
+                <p>Price: $150,000</p>
+            </div>
+            <div class="property-card">
+                <img src="https://via.placeholder.com/300" alt="Property 2">
+                <h3>Cozy Cottage</h3>
+                <p>Seattle, WA</p>
+                <p>Price: $95,000</p>
+            </div>
+            <div class="property-card">
+                <img src="https://via.placeholder.com/300" alt="Property 3">
+                <h3>Luxury Villa</h3>
+                <p>Miami, FL</p>
+                <p>Price: $300,000</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Real Estate Game. All rights reserved.</p>
+    </footer>
+</body>
+</html>
