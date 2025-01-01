@@ -68,6 +68,19 @@
             color: #666;
             font-size: 14px;
         }
+        .vote-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .vote-button:hover {
+            background-color: #0056b3;
+        }
         footer {
             text-align: center;
             padding: 10px;
@@ -103,23 +116,33 @@
                 <h3>Modern Apartment</h3>
                 <p>San Francisco, CA</p>
                 <p>Price: $150,000</p>
+                <button class="vote-button" onclick="vote('Modern Apartment')">Vote</button>
             </div>
             <div class="property-card">
                 <img src="https://via.placeholder.com/300" alt="Property 2">
                 <h3>Cozy Cottage</h3>
                 <p>Seattle, WA</p>
                 <p>Price: $95,000</p>
+                <button class="vote-button" onclick="vote('Cozy Cottage')">Vote</button>
             </div>
             <div class="property-card">
                 <img src="https://via.placeholder.com/300" alt="Property 3">
                 <h3>Luxury Villa</h3>
                 <p>Miami, FL</p>
                 <p>Price: $300,000</p>
+                <button class="vote-button" onclick="vote('Luxury Villa')">Vote</button>
             </div>
         </section>
     </main>
     <footer>
         <p>&copy; 2025 Real Estate Game. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Voting function
+        function vote(propertyName) {
+            alert(`You voted for ${propertyName}! Thank you for your feedback.`);
+        }
+    </script>
 </body>
 </html>
