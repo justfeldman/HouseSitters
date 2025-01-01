@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calc IRR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        form {
+            margin: 20px auto;
+            max-width: 400px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculate IRR</h1>
+    <p>Enter your cash flows to calculate the Internal Rate of Return (IRR).</p>
+
+    <!-- IRR Calculation Form -->
+    <form id="irrForm">
+        <label for="initialInvestment">Initial Investment:</label>
+        <input type="number" id="initialInvestment" placeholder="Enter initial investment" required>
+        
+        <label for="cashFlows">Cash Flows (comma-separated):</label>
+        <input type="text" id="cashFlows" placeholder="e.g., 5000, 6000, 7000" required>
+        
+        <button type="button" onclick="calculateIRR()">Calculate IRR</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        // IRR Calculation Logic
+        function calculateIRR() {
+            const initialInvestment = parseFloat(document.getElementById('initialInvestment').value);
+            const cashFlows = document.getElementById('cashFlows').value.split(',').map(Number);
+
+            if (isNaN(initialInvestment) || cashFlows.some(isNaN)) {
+                document.getElementById('result').innerText = "Please enter valid numbers.";
+                return;
+            }
+
+            // Newton-Raphson method for IRR
+            function irr(cashFlows, initialInvestment, guess = 0.1) {
+                let maxIterations = 1000;
+                let precision = 0.00001;
+
+                for (let i = 0; i < maxIterations; i++) {
+                    let npv = -initialInvestment;
+                    let derivative = 0;
+
+                    for (let j = 0; j < cashFlows.length; j++) {
+                        npv += cashFlows[j] / Math.pow(1 + guess, j + 1);
+                        derivative += -j * cashFlows[j] / Math.pow(1 + guess, j + 2);
+                    }
+
+                    const newGuess = guess - npv / derivative;
+
+                    if (Math.abs(newGuess - guess) < precision) {
+                        return newGuess;
+                    }
+
+                    guess = newGuess;
+                }
+                return null; // IRR not found
+            }
+
+            const irrResult = irr(cashFlows, initialInvestment);
+
+            if (irrResult !== null) {
+                document.getElementById('result').innerText = `The IRR is ${(irrResult * 100).toFixed(2)}%.`;
+            } else {
+                document.getElementById('result').innerText = "Unable to calculate IRR. Check your inputs.";
+            }
+        }
+    </script>
+</body>
+</html>
